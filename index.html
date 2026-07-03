@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript DOM Access Methods</title>
+
+<style>
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 16px 60px;
+}
+
+#container{
+    width: 500px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,.2);
+}
+
+.dom-example{
+    font-size:20px;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+    color:#333;
+    background:white;
+}
+
+button{
+  padding: 20px 24px;
+  background: #fff;
+  color: #1a3a5c;
+  border: 2px solid #1a3a5c;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+button:hover{
+     background: #1a3a5c; color: #fff; 
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="container">
+
+<div class="customs-header">
+    <div class="header-left">
+      <div class="header-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22E12 2"/><path d="M5 12H19"/><path d="M12 18C7.5 18 5 14 5 12"/><path d="M12 18C16.5 18 19 14 19 12"/></svg>
+      </div>
+      <div>
+        <h2>JavaScript DOM Access Methods</h2>
+      </div>
+    </div>
+
+<p id="message" class="dom-example">
+Message via ID
+</p>
+
+<p class="dom-example">
+Message via Class
+</p>
+
+<p class="dom-example">
+Message via Tag
+</p>
+
+<p name="special" class="dom-example">
+Message via Name
+</p>
+
+<button onclick="accessById()">getElementById()</button>
+
+<button onclick="accessByClass()">getElementsByClassName()</button>
+
+<button onclick="accessByTag()">getElementsByTagName()</button>
+
+<button onclick="accessByName()">getElementsByName()</button>
+
+<button onclick="resetDemo()">Reset</button>
+
+</div>
+
+<script>
+
+function accessById(){
+
+    let element=document.getElementById("message");
+
+    element.innerHTML="Accessed using getElementById()";
+    element.style.backgroundColor="#dbeafe";
+    element.style.color="blue";
+    element.style.fontWeight="bold";
+}
+
+function accessByClass(){
+
+    let elements=document.getElementsByClassName("dom-example");
+
+    elements[1].innerHTML="Accessed using getElementsByClassName()";
+    elements[1].style.backgroundColor="#ffe4e6";
+    elements[1].style.color="red";
+    elements[1].style.fontWeight="bold";
+}
+
+function accessByTag(){
+
+    let tags=document.getElementsByTagName("p");
+
+    tags[2].innerHTML="Accessed using getElementsByTagName()";
+    tags[2].style.backgroundColor="#f3e8ff";
+    tags[2].style.color="purple";
+    tags[2].style.fontWeight="bold";
+    tags[2].style.fontSize="22px";
+}
+
+function accessByName(){
+
+    let named=document.getElementsByName("special");
+
+    named[0].innerHTML="Accessed using getElementsByName()";
+    named[0].style.backgroundColor="#dcfce7";
+    named[0].style.color="green";
+    named[0].style.fontStyle="italic";
+    named[0].style.fontWeight="bold";
+}
+
+function resetDemo(){
+
+    location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
+
