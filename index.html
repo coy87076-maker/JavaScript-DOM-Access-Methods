@@ -3,54 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JavaScript DOM Access Methods</title>
+<title>Payroll System using JavaScript DOM</title>
 
 <style>
 
-body{
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f0f2f5;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 16px 60px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-#container{
-    width: 500px;
+body{
+    background:#eef2f7;
+    padding:30px;
+}
+
+.container{
+    width:700px;
     margin:auto;
     background:white;
-    padding:30px;
+    padding:25px;
     border-radius:10px;
     box-shadow:0 0 15px rgba(0,0,0,.2);
 }
 
-.dom-example{
-    font-size:20px;
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input,select{
+    width:100%;
     padding:10px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
-    color:#333;
-    background:white;
+    margin:8px 0;
 }
 
 button{
-  padding: 20px 24px;
-  background: #fff;
-  color: #1a3a5c;
-  border: 2px solid #1a3a5c;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
+    padding:12px;
+    width:100%;
+    border:none;
+    background:royalblue;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    border-radius:5px;
 }
 
 button:hover{
-     background: #1a3a5c; color: #fff; 
+    background:#003cb3;
+}
+
+.result{
+    margin-top:20px;
+    padding:20px;
+    background:#f5f5f5;
+    border-radius:8px;
+}
+
+.highlight{
+    color:green;
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid gray;
+}
+
+th,td{
+    padding:8px;
+    text-align:center;
 }
 
 </style>
@@ -58,93 +86,196 @@ button:hover{
 </head>
 <body>
 
-<div id="container">
+<div class="container">
 
-<div class="customs-header">
-    <div class="header-left">
-      <div class="header-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22E12 2"/><path d="M5 12H19"/><path d="M12 18C7.5 18 5 14 5 12"/><path d="M12 18C16.5 18 19 14 19 12"/></svg>
-      </div>
-      <div>
-        <h2>JavaScript DOM Access Methods</h2>
-      </div>
-    </div>
+<h1 id="title">Payroll Calculator</h1>
 
-<p id="message" class="dom-example">
-Message via ID
-</p>
+<input type="text" id="empName" placeholder="Employee Name">
 
-<p class="dom-example">
-Message via Class
-</p>
+<input type="number" id="hours" placeholder="Hours Worked">
 
-<p class="dom-example">
-Message via Tag
-</p>
+<input type="number" id="rate" placeholder="Hourly Rate">
 
-<p name="special" class="dom-example">
-Message via Name
-</p>
+<select id="status">
 
-<button onclick="accessById()">getElementById()</button>
+<option value="Regular">Regular</option>
+<option value="Contractual">Contractual</option>
+<option value="Part-Time">Part-Time</option>
 
-<button onclick="accessByClass()">getElementsByClassName()</button>
+</select>
 
-<button onclick="accessByTag()">getElementsByTagName()</button>
+<button onclick="computePayroll()">Compute Payroll</button>
 
-<button onclick="accessByName()">getElementsByName()</button>
+<div class="result" id="output">
 
-<button onclick="resetDemo()">Reset</button>
+<h2>Payroll Summary</h2>
+
+</div>
 
 </div>
 
 <script>
 
-function accessById(){
+function computePayroll(){
 
-    let element=document.getElementById("message");
+// getElementById()
 
-    element.innerHTML="Accessed using getElementById()";
-    element.style.backgroundColor="#dbeafe";
-    element.style.color="blue";
-    element.style.fontWeight="bold";
+let name=document.getElementById("empName").value;
+let hours=document.getElementById("hours").value;
+let rate=document.getElementById("rate").value;
+let status=document.getElementById("status").value;
+
+// Validation
+
+if(name=="" || hours=="" || rate==""){
+    alert("Complete all fields.");
+    return;
 }
 
-function accessByClass(){
+// Payroll
 
-    let elements=document.getElementsByClassName("dom-example");
+let gross=hours*rate;
 
-    elements[1].innerHTML="Accessed using getElementsByClassName()";
-    elements[1].style.backgroundColor="#ffe4e6";
-    elements[1].style.color="red";
-    elements[1].style.fontWeight="bold";
+let tax=0;
+
+if(gross>=50000)
+    tax=gross*.20;
+else if(gross>=30000)
+    tax=gross*.15;
+else
+    tax=gross*.10;
+
+// Allowance
+
+let allowance=0;
+
+if(status=="Regular")
+    allowance=3000;
+else if(status=="Contractual")
+    allowance=1500;
+else
+    allowance=500;
+
+let net=(gross-tax)+allowance;
+
+
+// querySelector()
+
+document.querySelector("#title").textContent="Payroll Successfully Computed";
+
+// querySelectorAll()
+
+let inputs=document.querySelectorAll("input");
+
+inputs.forEach(function(box){
+    box.style.background="#ffffdd";
+});
+
+// getElementsByClassName()
+
+let result=document.getElementsByClassName("result")[0];
+
+// innerHTML
+
+result.innerHTML="";
+
+// createElement()
+
+let heading=document.createElement("h2");
+
+heading.textContent="Employee Payroll";
+
+heading.setAttribute("class","highlight");
+
+// appendChild()
+
+result.appendChild(heading);
+
+// create Table
+
+let table=document.createElement("table");
+
+table.innerHTML=`
+
+<tr>
+<th>Description</th>
+<th>Value</th>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>${name}</td>
+</tr>
+
+<tr>
+<td>Hours Worked</td>
+<td>${hours}</td>
+</tr>
+
+<tr>
+<td>Hourly Rate</td>
+<td>₱${Number(rate).toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Status</td>
+<td>${status}</td>
+</tr>
+
+<tr>
+<td>Gross Pay</td>
+<td>₱${gross.toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Tax</td>
+<td>₱${tax.toFixed(2)}</td>
+</tr>
+
+<tr>
+<td>Allowance</td>
+<td>₱${allowance.toFixed(2)}</td>
+</tr>
+
+<tr>
+<td><b>Net Pay</b></td>
+<td><b>₱${net.toFixed(2)}</b></td>
+</tr>
+
+`;
+
+result.appendChild(table);
+
+
+// getElementsByTagName()
+
+let cells=document.getElementsByTagName("tr");
+
+for(let i=0;i<cells.length;i++){
+
+    if(i%2==1){
+        cells[i].style.fontWeight="bold";
+    }
+
 }
 
-function accessByTag(){
+// removeChild()
 
-    let tags=document.getElementsByTagName("p");
+let oldParagraph=document.querySelector(".note");
 
-    tags[2].innerHTML="Accessed using getElementsByTagName()";
-    tags[2].style.backgroundColor="#f3e8ff";
-    tags[2].style.color="purple";
-    tags[2].style.fontWeight="bold";
-    tags[2].style.fontSize="22px";
+if(oldParagraph!=null){
+    result.removeChild(oldParagraph);
 }
 
-function accessByName(){
+// createElement()
 
-    let named=document.getElementsByName("special");
+let note=document.createElement("p");
 
-    named[0].innerHTML="Accessed using getElementsByName()";
-    named[0].style.backgroundColor="#dcfce7";
-    named[0].style.color="green";
-    named[0].style.fontStyle="italic";
-    named[0].style.fontWeight="bold";
-}
+note.textContent="Payroll generated successfully.";
 
-function resetDemo(){
+note.setAttribute("class","note");
 
-    location.reload();
+result.appendChild(note);
 
 }
 
